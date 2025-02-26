@@ -1,24 +1,45 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Services = () => {
   const services = [
     {
-      title: "Marketing Reels",
+      title: "Individual Reels & Posters",
+      price: "From ₹500",
+      features: [
+        "Reel Only (1) - ₹500",
+        "Poster Only (2) - ₹500",
+        "Reel + Poster (1) - ₹700",
+        "Professional editing",
+        "Quick turnaround"
+      ]
+    },
+    {
+      title: "Marketing Packages",
+      price: "From ₹1,000",
+      features: [
+        "Silver Kit (₹1,000) - 2 reels, 5 posters",
+        "Gold Kit (₹1,500) - 4 reels, 5 high-quality posters",
+        "Diamond Kit (₹2,000) - 5 reels, 10 high-quality posters",
+        "Platinum Kit (₹3,000) - Full marketing team for 3 days"
+      ]
+    },
+    {
+      title: "Additional Services",
       price: "₹500",
-      features: ["15-30 second duration", "Professional editing", "Music and effects", "2 revisions included"]
-    },
-    {
-      title: "Event Posters",
-      price: "₹1,000",
-      features: ["Professional design", "Print-ready files", "Social media versions", "3 revisions included"]
-    },
-    {
-      title: "Complete Package",
-      price: "₹5,000",
-      features: ["Marketing reels", "Event posters", "Social media management", "Email marketing", "24/7 support"]
+      features: [
+        "Volunteers (₹500 per person per 5 hours)",
+        "Professional event coverage",
+        "Dedicated support team",
+        "Travel expenses vary by location"
+      ]
     }
   ];
+
+  const handleGetStarted = () => {
+    window.open("https://cal.com/j-riteesh-reddy", "_blank");
+  };
 
   return (
     <div className="py-12 bg-gray-50">
@@ -43,11 +64,23 @@ const Services = () => {
                   </li>
                 ))}
               </ul>
-              <button className="w-full bg-primary text-white rounded-lg px-4 py-2 hover:bg-primary-hover transition-colors">
-                Get Started
+              <button 
+                onClick={handleGetStarted}
+                className="w-full bg-primary text-white rounded-lg px-4 py-2 hover:bg-primary-hover transition-colors"
+              >
+                Contact Us Now
               </button>
             </div>
           ))}
+        </div>
+
+        <div className="text-center mt-12">
+          <Link 
+            to="/quote" 
+            className="inline-block bg-white text-primary border border-primary rounded-lg px-6 py-3 hover:bg-primary/5 transition-colors"
+          >
+            View Detailed Pricing
+          </Link>
         </div>
       </div>
     </div>
