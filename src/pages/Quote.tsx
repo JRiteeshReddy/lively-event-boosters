@@ -1,7 +1,6 @@
 
 import React, { useState } from 'react';
 import { toast } from "@/components/ui/use-toast";
-import { Link } from "react-router-dom";
 
 const Quote = () => {
   const [total, setTotal] = useState(0);
@@ -44,12 +43,6 @@ const Quote = () => {
       name: "Volunteers (Per person per 5 hours)", 
       price: 500, 
       category: "Additional Services" 
-    },
-    { 
-      name: "Travel Expenses", 
-      price: 0, 
-      category: "Additional Services",
-      description: "Additional cost based on location" 
     }
   ];
 
@@ -79,10 +72,8 @@ const Quote = () => {
       return;
     }
 
-    toast({
-      title: "Selection confirmed!",
-      description: `Your estimated total is ₹${total}. Redirecting to contact page.`,
-    });
+    // Open Cal.com scheduling page
+    window.open("https://cal.com/j-riteesh-reddy", "_blank");
   };
 
   const groupedServices = services.reduce((groups, service) => {
@@ -127,7 +118,7 @@ const Quote = () => {
                       </div>
                     </div>
                     <span className="text-gray-900 font-semibold ml-4">
-                      {service.price > 0 ? `₹${service.price}` : 'Variable'}
+                      ₹{service.price}
                     </span>
                   </div>
                 ))}
@@ -141,13 +132,16 @@ const Quote = () => {
               <span className="text-2xl font-bold text-primary">₹{total}</span>
             </div>
             
-            <Link
-              to="/contact"
+            <button
               onClick={handleContactUs}
-              className="w-full bg-primary text-white rounded-lg px-4 py-3 hover:bg-primary-hover transition-colors flex items-center justify-center"
+              className="w-full bg-primary text-white rounded-lg px-4 py-3 hover:bg-primary-hover transition-colors"
             >
               Contact Us Now
-            </Link>
+            </button>
+            
+            <p className="mt-4 text-sm text-gray-500 text-center">
+              Note: Additional charges will apply for travel expenses based on location
+            </p>
           </div>
         </div>
       </div>
