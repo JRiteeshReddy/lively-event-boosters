@@ -1,17 +1,56 @@
 
 import React, { useState } from 'react';
 import { toast } from "@/components/ui/use-toast";
+import { Link } from "react-router-dom";
 
 const Quote = () => {
   const [total, setTotal] = useState(0);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
 
   const services = [
-    { name: "Marketing Reel", price: 500 },
-    { name: "Event Poster", price: 1000 },
-    { name: "Social Media Package", price: 2000 },
-    { name: "Email Campaign", price: 1500 },
-    { name: "Full Marketing Package", price: 5000 }
+    // Individual Services
+    { name: "Reel Only (1)", price: 500, category: "Individual Services" },
+    { name: "Poster Only (2)", price: 500, category: "Individual Services" },
+    { name: "Reel + Poster (1)", price: 700, category: "Individual Services" },
+    
+    // Marketing Packages
+    { 
+      name: "Silver Kit", 
+      price: 1000, 
+      category: "Marketing Packages",
+      description: "2 reels, 5 posters"
+    },
+    { 
+      name: "Gold Kit", 
+      price: 1500, 
+      category: "Marketing Packages",
+      description: "4 reels, 5 high-quality posters"
+    },
+    { 
+      name: "Diamond Kit", 
+      price: 2000, 
+      category: "Marketing Packages",
+      description: "5 reels, 10 high-quality posters"
+    },
+    { 
+      name: "Platinum Kit", 
+      price: 3000, 
+      category: "Marketing Packages",
+      description: "A full marketing team for 3 days. Covers all marketing needs (reels, posters, strategy, and execution)"
+    },
+    
+    // Additional Services
+    { 
+      name: "Volunteers (Per person per 5 hours)", 
+      price: 500, 
+      category: "Additional Services" 
+    },
+    { 
+      name: "Travel Expenses", 
+      price: 0, 
+      category: "Additional Services",
+      description: "Additional cost based on location" 
+    }
   ];
 
   const handleServiceToggle = (serviceName: string, price: number) => {
@@ -30,51 +69,71 @@ const Quote = () => {
     });
   };
 
-  const handleGetQuote = () => {
+  const handleContactUs = () => {
     if (selectedServices.length === 0) {
       toast({
         title: "No services selected",
-        description: "Please select at least one service to get a quote.",
+        description: "Please select at least one service before proceeding.",
         variant: "destructive",
       });
       return;
     }
 
     toast({
-      title: "Quote generated!",
-      description: `Your estimated total is ₹${total}. We'll contact you with more details.`,
+      title: "Selection confirmed!",
+      description: `Your estimated total is ₹${total}. Redirecting to contact page.`,
     });
   };
+
+  const groupedServices = services.reduce((groups, service) => {
+    if (!groups[service.category]) {
+      groups[service.category] = [];
+    }
+    groups[service.category].push(service);
+    return groups;
+  }, {} as Record<string, typeof services>);
 
   return (
     <div className="py-12 bg-gray-50">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">Get an Instant Quote</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-4">MyEventMarketingTeam – Pricing Packages</h1>
           <p className="text-xl text-gray-600 mb-12">Select the services you need</p>
         </div>
         
         <div className="bg-white rounded-lg shadow-lg p-8">
-          <div className="space-y-4">
-            {services.map((service) => (
-              <div
-                key={service.name}
-                className="flex items-center justify-between p-4 border rounded-lg cursor-pointer hover:bg-gray-50"
-                onClick={() => handleServiceToggle(service.name, service.price)}
-              >
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={selectedServices.includes(service.name)}
-                    onChange={() => {}}
-                    className="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary"
-                  />
-                  <label className="ml-3 text-gray-700">{service.name}</label>
-                </div>
-                <span className="text-gray-900 font-semibold">₹{service.price}</span>
+          {Object.entries(groupedServices).map(([category, categoryServices]) => (
+            <div key={category} className="mb-8">
+              <h2 className="text-xl font-bold text-gray-900 mb-4">{category}</h2>
+              <div className="space-y-4">
+                {categoryServices.map((service) => (
+                  <div
+                    key={service.name}
+                    className="flex items-center justify-between p-4 border rounded-lg cursor-pointer hover:bg-gray-50"
+                    onClick={() => handleServiceToggle(service.name, service.price)}
+                  >
+                    <div className="flex items-center flex-1">
+                      <input
+                        type="checkbox"
+                        checked={selectedServices.includes(service.name)}
+                        onChange={() => {}}
+                        className="h-4 w-4 text-primary border-gray-300 rounded focus:ring-primary"
+                      />
+                      <div className="ml-3">
+                        <label className="text-gray-700 font-medium">{service.name}</label>
+                        {service.description && (
+                          <p className="text-sm text-gray-500">{service.description}</p>
+                        )}
+                      </div>
+                    </div>
+                    <span className="text-gray-900 font-semibold ml-4">
+                      {service.price > 0 ? `₹${service.price}` : 'Variable'}
+                    </span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
           
           <div className="mt-8 pt-8 border-t border-gray-200">
             <div className="flex justify-between items-center mb-6">
@@ -82,12 +141,13 @@ const Quote = () => {
               <span className="text-2xl font-bold text-primary">₹{total}</span>
             </div>
             
-            <button
-              onClick={handleGetQuote}
-              className="w-full bg-primary text-white rounded-lg px-4 py-3 hover:bg-primary-hover transition-colors"
+            <Link
+              to="/contact"
+              onClick={handleContactUs}
+              className="w-full bg-primary text-white rounded-lg px-4 py-3 hover:bg-primary-hover transition-colors flex items-center justify-center"
             >
-              Get Detailed Quote
-            </button>
+              Contact Us Now
+            </Link>
           </div>
         </div>
       </div>
