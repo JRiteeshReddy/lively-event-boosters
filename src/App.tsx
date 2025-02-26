@@ -8,8 +8,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Index from "./pages/Index";
 import Services from "./pages/Services";
-import Portfolio from "./pages/Portfolio";
-import Team from "./pages/Team";
 import Contact from "./pages/Contact";
 import Quote from "./pages/Quote";
 import NotFound from "./pages/NotFound";
@@ -28,8 +26,6 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/services" element={<Services />} />
-              <Route path="/portfolio" element={<Portfolio />} />
-              <Route path="/team" element={<Team />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/quote" element={<Quote />} />
               <Route path="*" element={<NotFound />} />

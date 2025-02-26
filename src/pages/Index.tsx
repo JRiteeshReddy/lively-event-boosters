@@ -1,4 +1,3 @@
-
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -25,7 +24,7 @@ const Index = () => {
               <span className="text-primary">Stand Out</span>
             </h1>
             <p className="max-w-2xl mx-auto text-xl text-gray-600">
-              Professional marketing solutions designed specifically for university and college events.
+              Professional marketing solutions designed specifically for university and college events in Bangalore.
               From ₹500, create impactful promotions that drive attendance.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -37,12 +36,15 @@ const Index = () => {
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link
-                to="/portfolio"
+                to="/contact"
                 className="inline-flex items-center justify-center px-6 py-3 bg-white text-primary border border-primary rounded-lg hover:bg-primary/5 transition-colors duration-200"
               >
-                View Our Work
+                Contact Us
               </Link>
             </div>
+            <p className="text-sm text-gray-500">
+              *Currently serving Bangalore region only
+            </p>
           </div>
         </div>
       </section>
